@@ -1,0 +1,36 @@
+.li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: solid black;
+    border-radius: 15px;
+    margin: 0;
+    max-width: 100%;
+}
+
+button {
+    max-height: 25px;
+    background-color: var(--greencolor);
+    transition: .7s;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: var(--orangecolor);
+}
+
+.quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+        min-height: 5px;
+        min-width: 5px;
+        background-color: var(--yellowcolor);
+
+    }
+    button:hover{
+        background-color: var(--bluecolor);
+        transform: .7s;
+    }
+}

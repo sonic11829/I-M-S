@@ -1,69 +1,48 @@
-const Item = require('../../models/itemSchema')
+require('dotenv').config()
+const Item = require('../../models/item')
+const User = require('../../models/user')
 
-const dataController = {
-    checkForError (err, res) {
-        if (err) {
-            res.status(400).send({
-                msg: err.message
-            })
-            return true
-        } else {return false}
-    },
-
-    index (req, res, next) {
-        Item.find({}, (err, foundItems) => {
-            if (this.checkForError(err, res) === false) {
-                res.locals.data.items = foundItems
-                next()
-            }
-        })
-    },
-
-    create (req, res, next) {
-        Item.create(req.body, (err, createdItem) => {
-            if (this.checkForError(err, res) === false) {
-                res.locals.data.items = createdItem
-                next()
-            }
-        })
-    },
-
-    show (req, res, next) {
-        Item.findById(req,params.id, (err, foundItem) => {
-            if (this.checkForError(err, res) === false) {
-                res.locals.data.items = foundItem
-                next()
-            }
-        })
-    },
-
-    update (req, res, next) {
-        Item.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedItem) => {
-            if (this.checkForError(err, res) === false) {
-                res.locals.data.item = updatedItem
-                next()
-            }
-        })
-    },
-
-    delete (req, res, next) {
-        Item.findByIdAndDelete(req.params.id, (err, deletedItem) => {
-            if (this.checkForError(err, res) === false) {
-                res.locals.data.item = deletedItem
-                next()
-            }
-        })
-    }
+// delete item
+const destroyItem = async (req, res, next) => {
+  try {
+    const deletedItem = await Item.findByIdAndDelete(req.params.id)
+    res.locals.data.item = deletedItem
+    next()
+  } catch (error) {
+    res.status(400).json({ msg: error.message })
+  }
+}
+// update item
+const updateItem = async (req, res, next) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.locals.data.item = updatedItem
+    next()
+  } catch (error) {
+    res.status(400).json({ msg: error.message })
+  }
+}
+// create item
+const createItem = async (req, res, next) => {
+  try {
+    const createdItem = await Item.create(req.body)
+    const user = await User.findOne({ email: res.locals.data.email })
+    user.items.addToSet(createdItem)
+    await user.save()
+    res.locals.data.item = createdItem
+    next()
+  } catch (error) {
+    res.status(400).json({ msg: error.message })
+  }
 }
 
-const apiController = {
-    index (req, res, next) {
-        res.json(res.locals.data.items)
-    },
-
-    show (req, res, next) {
-        res.json(res.locals.data.item)
-    }
+const respondWithItem = (req, res) => {
+  res.json(res.locals.data.item)
 }
 
-module.exports = { dataController, apiController}
+module.exports = {
+  destroyItem,
+  updateItem,
+  createItem,
+  respondWithItem
+}

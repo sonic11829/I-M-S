@@ -1,0 +1,27 @@
+.h1 {
+    background-color: var(--bluecolor);
+    border-radius: 5px;
+    min-height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.button {
+    background-color: var(--bluecolor);
+    font-size: 1.5rem;
+    min-height: 2rem;
+    min-width: 100%;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0;
+    transition: .7s;
+}
+
+.button:hover{
+    background-color: var(--yellowcolor);
+    transition: .7s;
+}

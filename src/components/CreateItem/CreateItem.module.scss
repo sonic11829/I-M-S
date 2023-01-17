@@ -1,0 +1,35 @@
+.h2 {
+    background-color: var(--bluecolor);
+    border-radius: 5px;
+    min-height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    transition: .7s;
+}
+
+.div {
+    display: flex;
+}
+
+.button:hover {
+    background-color: var(--greencolor);
+    transition: .7s;
+    cursor: pointer;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
+    margin: 4px;
+}
